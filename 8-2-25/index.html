@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch User Data from API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .address, .company {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Information</h1>
+    <table id="user-data">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Website</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {  // Ready state 4 means request is complete
+                if (xhr.status === 200) {
+                    const users = JSON.parse(xhr.responseText);
+                    const tbody = document.querySelector("#user-data tbody");
+                    users.forEach(user => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td class="address">${user.address.street}, ${user.address.suite}, ${user.address.city} - ${user.address.zipcode}</td>
+                            <td>${user.phone}</td>
+                            <td><a href="http://${user.website}" target="_blank">${user.website}</a></td>
+                            <td class="company">${user.company.name} (${user.company.catchPhrase})</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    console.error('Request failed with status:', xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    </script>
+</body>
+</html>

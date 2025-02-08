@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Post Data from API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .body {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Post Information</h1>
+    <table id="post-data">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Post ID</th>
+                <th>Title</th>
+                <th>Body</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts', true);
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const res = JSON.parse(xhr.responseText);
+                const tbody = document.querySelector("#post-data tbody");
+                const postTitles = res.map(post => post.title);
+                console.log(postTitles);
+                res.forEach(post => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${post.userId}</td>
+                        <td>${post.id}</td>
+                        <td>${post.title}</td>
+                        <td class="body">${post.body}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                console.error('Request failed with status:', xhr.status);
+            }
+        };
+        xhr.send();
+    </script>
+</body>
+</html>
