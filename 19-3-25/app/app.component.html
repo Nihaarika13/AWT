@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <h1>Student Management System</h1>
+    <form>
+      <label>ID</label>
+      <input type="text" #id placeholder="Enter Student ID">
+
+      <label>Name</label>
+      <input type="text" #name placeholder="Enter Student Name">
+
+      <label>Branch</label>
+      <input type="text" #branch placeholder="Enter Student Branch">
+
+      <button type="button" (click)="addStudent(id, name, branch)">Add Student</button>
+    </form>
+
+
+    <table border="1"> 
+      <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Branch</td>
+        <td colspan="2">Actions</td>
+      </tr>
+  
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.branch }}</td>
+        <td>
+          <button class="btn btn-info" (click)="editStudent(student)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteStudent(student.id)">Delete</button>
+        </td>
+      </tr>
+    </table> 
+  
+    <form *ngIf="selectedStudent">
+      <label>ID</label>
+      <input type="text" disabled [(ngModel)]="selectedStudent.id"name="id"placeholder>
+
+      <label>Name</label>
+      <input type="text" [(ngModel)]="selectedStudent.name"name="name"placeholder>
+
+      <label>Branch</label>
+      <input type="text" [(ngModel)]="selectedStudent.branch"name="name"placeholder>
+
+      <button type="button"(click)="updateStudent()">Update</button>
+    </form>
+  </body>
+</html> 
