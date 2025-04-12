@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <form>
+            <label>Name</label>
+            <input type="text" #name placeholder="enter product name" />
+            <label>Description </label>
+            <input type="text" #description placeholder="enter description"/>
+            <label>Price</label>
+            <input type="number" #price placeholder="enter price"/>
+            <label>Catgory</label>
+            <input type="text" #category placeholder="enter category"/>
+            <label>stock</label>
+            <input type="text" #stock placeholder="enter stock"/>
+            <button (click)="addProduct()">Add Product</button>
+        </form>
+        <table table-border="1">
+            <tr *ngIf="let product of products">
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.stock}}</td>
+                <div>
+                    <button (click)="editProduct()">Edit</button>    
+                    <button (click)="deleteProduct()">Delete</button>
+                </div>
+            </tr>
+        </table>
+        <label>Name</label>
+        <input type="text" #name placeholder="enter product name"/>
+        <label>Description </label>
+        <input type="text" #description placeholder="enter description"/>
+        <label>Price</label>
+        <input type="number" #price placeholder="enter price"/>
+        <label>Catgory</label>
+        <input type="text" #category placeholder="enter category"/>
+        <label>stock</label>
+        <input type="text" #stock placeholder="enter stock"/>
+        <button (click)="updateProduct()">Update</button>
+
+    </body>
+</html>
