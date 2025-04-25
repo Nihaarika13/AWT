@@ -1,0 +1,54 @@
+<p>working</p>
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>User Profile Management</title></head>
+  <body>
+<h1>User Profile Management</h1>
+<form #addUserForm="ngForm" (ngSubmit)="addUser(newUser)">
+  <label>ID</label>
+  <input type="number" name="id" placeholder="id" [(ngModel)]="newUser.id" required />
+  <label>Name</label>
+  <input type="text" name="name" placeholder="name" [(ngModel)]="newUser.name" required />
+  <label>Branch</label>
+  <input type="text" name="branch" placeholder="branch" [(ngModel)]="newUser.branch" required />
+  <button type="submit">Add</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Branch</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.branch }}</td>
+      <td>
+        <button (click)="editUser(user)">Edit</button>
+        <button (click)="deleteUser(user.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="selectedUser">
+  <h2>Edit User</h2>
+  <form #editUserForm="ngForm" (ngSubmit)="updateUser(selectedUser)">
+    <label>ID</label>
+    <input type="number" name="id" [(ngModel)]="selectedUser.id" readonly />
+    <label>Name</label>
+    <input type="text" name="name" [(ngModel)]="selectedUser.name" required />
+    <label>Branch</label>
+    <input type="text" name="branch" [(ngModel)]="selectedUser.branch" required />
+    <button type="submit">Update</button>
+    <button type="button" (click)="selectedUser = null">Cancel</button>
+  </form>
+</div>
+</body>
+</html>
