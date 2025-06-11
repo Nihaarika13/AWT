@@ -77,8 +77,6 @@ class App extends React.Component {
     });
   }
 
-
-
   handleAddInputChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -87,16 +85,15 @@ class App extends React.Component {
   handleAddFormSubmit = (event) => {
     event.preventDefault();
     const { newId, newName, newEmail, students } = this.state;
+    const idExists = students.some(student => student.id === newId); // string compare
 
-    // Check if newId already exists
-    const idExists = students.some(student => student.id === Number(newId));
     if (idExists) {
       alert(`Student with ID ${newId} already exists!`);
-      return;  // Don't proceed
+      return; 
     }
 
-    // Add new student
-    axios.post('http://localhost:3001/Students', { id: Number(newId), name: newName, email: newEmail })
+    axios.post('http://localhost:3001/Students', { id: newId, name: newName, email: newEmail })
+
       .then(response => {
         this.setState(prevState => ({
           students: [...prevState.students, response.data],
